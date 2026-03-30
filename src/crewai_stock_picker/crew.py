@@ -5,9 +5,6 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai_tools import SerperDevTool
 from pydantic import BaseModel, Field
-from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
-from crewai.memory.storage.rag_storage import RAGStorage
-from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 from crewai_stock_picker.tools.push_tool import PushNotificationTool
 
 
@@ -45,18 +42,15 @@ class StockPicker():
 
     @agent
     def trending_company_finder(self) -> Agent:
-        return Agent(config=self.agents_config['trending_company_finder'],
-                     tools=[SerperDevTool()], memory=True)
+        return Agent(config=self.agents_config['trending_company_finder'], tools=[SerperDevTool()])
 
     @agent
     def financial_researcher(self) -> Agent:
-        return Agent(config=self.agents_config['financial_researcher'],
-                     tools=[SerperDevTool()])
+        return Agent(config=self.agents_config['financial_researcher'], tools=[SerperDevTool()])
 
     @agent
     def stock_picker(self) -> Agent:
-        return Agent(config=self.agents_config['stock_picker'],
-                     tools=[PushNotificationTool()], memory=True)
+        return Agent(config=self.agents_config['stock_picker'], tools=[PushNotificationTool()])
 
     @task
     def find_trending_companies(self) -> Task:
@@ -93,6 +87,4 @@ class StockPicker():
             process=Process.hierarchical,
             verbose=True,
             manager_agent=manager,
-            memory=True,
-
         )
