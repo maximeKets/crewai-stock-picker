@@ -3,7 +3,10 @@ from typing import List
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai_tools import SerperDevTool
 from pydantic import BaseModel, Field
+
+from crewai_stock_picker.tools.push_tool import PushNotificationTool
 
 
 class TrendingCompany(BaseModel):
@@ -26,3 +29,26 @@ class TrendingCompanyResearch(BaseModel):
 class TrendingCompanyResearchList(BaseModel):
     """ A list of detailed research on all the companies """
     research_list: List[TrendingCompanyResearch] = Field(description="Comprehensive research on all trending companies")
+
+
+@CrewBase
+class StockPicker():
+    """StockPicker crew"""
+
+    agents_config = 'config/agents.yaml'
+    tasks_config = 'config/tasks.yaml'
+
+    @agent
+    def trending_company_finder(self) -> Agent:
+        return Agent(config=self.agents_config['trending_company_finder'],
+                     tools=[SerperDevTool()], memory=True)
+
+    @agent
+    def financial_researcher(self) -> Agent:
+        return Agent(config=self.agents_config['financial_researcher'],
+                     tools=[SerperDevTool()])
+
+    @agent
+    def stock_picker(self) -> Agent:
+        return Agent(config=self.agents_config['stock_picker'],
+                     tools=[PushNotificationTool()], memory=True)
