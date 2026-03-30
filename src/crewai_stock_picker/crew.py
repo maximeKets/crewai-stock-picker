@@ -5,8 +5,6 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from pydantic import BaseModel, Field
 
-    agents: list[BaseAgent]
-    tasks: list[Task]
 
 class TrendingCompany(BaseModel):
     """ A company that is in the news and attracting attention """
