@@ -1,54 +1,112 @@
-# CrewaiStockPicker Crew
+<div align="center">
+  <h1>📈 CrewAI Stock Picker</h1>
+  <p><em>An autonomous multi-agent system that researches trending stocks and picks the best investment.</em></p>
 
-Welcome to the CrewaiStockPicker Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+  [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+  [![CrewAI](https://img.shields.io/badge/CrewAI-1.12.2-orange.svg)](https://crewai.com)
+  [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+  [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://github.com/maximeKets/crewai-stock-picker/graphs/commit-activity)
+</div>
 
-## Installation
+---
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+## 📖 Overview
 
-First, if you haven't already, install uv:
+**CrewAI Stock Picker** is a cutting-edge, autonomous AI project built on the [crewAI](https://crewai.com) framework. It leverages a hierarchical team of specialized AI agents to scan the internet for trending companies, conduct deep financial research, and ultimately select the best equity investment.
+
+The final decision is instantly delivered to you via a custom **Push Notification Tool**, followed by a comprehensive markdown report detailing the investment rationale.
+
+## ✨ Features
+
+- 🕵️‍♂️ **Market Scouting**: Automatically finds companies trending in the news in any given sector.
+- 📊 **Deep Financial Research**: Generates comprehensive analysis reports (market position, future outlook, investment potential) for trending stocks.
+- 🎯 **Intelligent Equity Selection**: Compares candidates and selects the single most promising investment opportunity.
+- 📱 **Instant Alerts**: Uses a custom tool (`PushNotificationTool`) to send push notifications with the final stock pick and a 1-sentence rationale.
+- 📝 **Structured Outputs**: Produces organized JSON datasets and clear Markdown decision reports utilizing `pydantic` models.
+
+## 🤖 The Crew (Agents)
+
+The system operates using a **Hierarchical Process** overseen by an AI Manager:
+
+1. **Manager**: Coordinates the workflow, delegating research and decision-making tasks to the team.
+2. **Trending Company Finder** (`trending_company_finder`): Scours the web (using SerperDevTool) for 2-3 hot companies currently in the news.
+3. **Financial Researcher** (`financial_researcher`): Dives deep into the fundamentals and prospects of the identified companies.
+4. **Stock Picker** (`stock_picker`): Synthesizes the research, makes the final investment call, and alerts the user.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python `>=3.10, <3.14`
+- [uv](https://docs.astral.sh/uv/) (Extremely fast Python package installer and resolver)
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/maximeKets/crewai-stock-picker.git
+   cd crewai-stock-picker
+   ```
+
+2. **Install dependencies:**
+   This project uses `uv` for dependency management. If you don't have it, install it via `pip install uv`.
+   ```bash
+   crewai install
+   ```
+
+3. **Environment Setup:**
+   Copy the example environment file and add your API keys.
+   ```bash
+   cp .env.example .env
+   ```
+   *Make sure to configure your `OPENAI_API_KEY` and any keys required for Serper and push notifications in the `.env` file.*
+
+## ⚡ Usage
+
+To kickstart the AI crew and begin the autonomous stock-picking process, run:
 
 ```bash
-pip install uv
+crewai run
+```
+*(Alternatively, use `uv run crewai_stock_picker`)*
+
+### Outputs
+Once the run is complete, check the `output/` directory for the results:
+- `output/trending_companies.json`: The list of companies found.
+- `output/research_report.json`: Deep-dive research data.
+- `output/decision.md`: The final investment recommendation and rationale.
+
+## 🛠️ Project Structure
+
+```text
+crewai-stock-picker/
+├── pyproject.toml
+├── src/crewai_stock_picker/
+│   ├── config/
+│   │   ├── agents.yaml      # Agent definitions and backstories
+│   │   └── tasks.yaml       # Task definitions and expected outputs
+│   ├── tools/
+│   │   └── push_tool.py     # Custom Push Notification Tool
+│   ├── crew.py              # CrewAI setup (Agents, Tasks, and Crew initialization)
+│   └── main.py              # CLI entry point
+└── output/                  # Generated research and reports
 ```
 
-Next, navigate to your project directory and install the dependencies:
+## 🤝 Contributing
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/maximeKets/crewai-stock-picker/issues).
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-- Modify `src/crewai_stock_picker/config/agents.yaml` to define your agents
-- Modify `src/crewai_stock_picker/config/tasks.yaml` to define your tasks
-- Modify `src/crewai_stock_picker/crew.py` to add your own logic, tools and specific args
-- Modify `src/crewai_stock_picker/main.py` to add custom inputs for your agents and tasks
+## 📜 License
 
-## Running the Project
+Distributed under the MIT License. See `LICENSE` for more information.
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
-```bash
-$ crewai run
-```
-
-This command initializes the crewai-stock-picker Crew, assembling the agents and assigning them tasks as defined in your configuration.
-
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
-
-## Understanding Your Crew
-
-The crewai-stock-picker Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
-
-## Support
-
-For support, questions, or feedback regarding the CrewaiStockPicker Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
+---
+<div align="center">
+  <i>Built with ❤️ using <a href="https://crewai.com">crewAI</a></i>
+</div>
