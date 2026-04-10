@@ -19,11 +19,12 @@ ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home "/nonexistent" \
+    --home "/home/appuser" \
     --shell "/sbin/nologin" \
-    --no-create-home \
     --uid "${UID}" \
     appuser
+
+RUN chown appuser:appuser /app
 
 # Optimisation du cache : copie stricte des fichiers de dépendances
 RUN --mount=type=cache,target=/root/.cache/uv \
@@ -32,7 +33,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Copie du code source
-COPY . /app
+COPY --chown=appuser:appuser . /app
 
 # Installation du projet local
 RUN --mount=type=cache,target=/root/.cache/uv \
@@ -45,5 +46,5 @@ USER appuser
 
 EXPOSE 7860
 
-# Point d'entrée pour lancer Gradio
-CMD ["uv", "run", "run_ui"]
+# Point d'entrée direct pour lancer Gradio (sans wrapper cache temp)
+CMD ["run_ui"]
