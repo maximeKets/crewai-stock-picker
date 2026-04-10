@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+# Ensure the src/ directory is on the path (needed for HF Spaces sdk:gradio)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import gradio as gr
 from datetime import datetime
 import os
@@ -44,7 +50,7 @@ def run_research(sector: str, profile: gr.OAuthProfile | None):
         
         final_report = result.raw
         
-        yield f"{final_report}\n\n---\n*Recherche effectuée par {username} ({current_usage}/{MAX_QUOTA} requêtes utilisées)*"
+        yield f"{final_report}\n\n---\n*Recherche effectuée par {username} ({current_usage}/{MAX_QUOTA}) requêtes utilisées*"
     except Exception as e:
         yield f"❌ **An error occurred during execution:**\n\n```text\n{str(e)}\n```"
 
