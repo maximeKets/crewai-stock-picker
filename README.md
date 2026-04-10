@@ -1,3 +1,12 @@
+---
+title: CrewAI Stock Picker
+emoji: 📈
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: true
+hf_oauth: true
+---
 <div align="center">
   <h1>📈 CrewAI Stock Picker</h1>
   <p><em>An autonomous multi-agent system that researches trending stocks and picks the best investment.</em></p>
