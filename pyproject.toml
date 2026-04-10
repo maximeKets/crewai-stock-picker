@@ -5,10 +5,12 @@ description = "crewai-stock-picker using crewAI"
 authors = [{ name = "Maxime Kets", email = "maximekets80@gmail.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[tools]==1.12.2"
+    "crewai[tools]==1.12.2",
+    "gradio>=4.0.0"
 ]
 
 [project.scripts]
+run_ui = "crewai_stock_picker.app:main"
 crewai_stock_picker = "crewai_stock_picker.main:run"
 run_crew = "crewai_stock_picker.main:run"
 train = "crewai_stock_picker.main:train"

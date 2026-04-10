@@ -45,7 +45,7 @@ def main():
         run_btn.click(fn=run_research, inputs=sector_input, outputs=output_markdown)
         
     # Expose the port commonly used by Docker/Gradio
-    demo.launch(server_name="0.0.0.0", server_port=7850)
+    demo.launch(server_name="0.0.0.0", server_port=7860)
 
 if __name__ == "__main__":
     main()
