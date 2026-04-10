@@ -3,7 +3,8 @@ title: CrewAI Stock Picker
 emoji: 📈
 colorFrom: green
 colorTo: blue
-sdk: docker
+sdk: gradio
+app_file: src/crewai_stock_picker/app.py
 pinned: true
 hf_oauth: true
 ---
