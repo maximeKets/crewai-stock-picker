@@ -6,7 +6,7 @@ authors = [{ name = "Maxime Kets", email = "maximekets80@gmail.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
     "crewai[tools]==1.12.2",
-    "gradio>=4.0.0"
+    "gradio[oauth]>=4.0.0"
 ]
 
 [project.scripts]
