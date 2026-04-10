@@ -2,6 +2,8 @@
   <h1>📈 CrewAI Stock Picker</h1>
   <p><em>An autonomous multi-agent system that researches trending stocks and picks the best investment.</em></p>
 
+  [![GHCR](https://img.shields.io/badge/GHCR-Ready-2ea44f?logo=github)](https://github.com/maximeKets/crewai-stock-picker/packages)
+  [![DockerHub](https://img.shields.io/badge/DockerHub-Ready-2496ed?logo=docker)](https://hub.docker.com/r/maximeks/crewai-stock-picker)
   [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
   [![CrewAI](https://img.shields.io/badge/CrewAI-1.12.2-orange.svg)](https://crewai.com)
   [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -105,6 +107,21 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ## 📜 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## 🐳 Déploiement via Docker
+
+Ce projet est distribué sous forme d'image Docker multi-architecture (AMD64 / ARM64).
+
+```bash
+# 1. Récupérer la dernière image depuis GitHub Container Registry
+docker pull ghcr.io/maximeKets/crewai-stock-picker:latest
+
+# 2. Lancer le conteneur sur le port Gradio (7860) avec vos API Keys
+docker run -p 7860:7860 \
+  -e OPENAI_API_KEY=your_key \
+  -e SERPER_API_KEY=your_key \
+  ghcr.io/maximeKets/crewai-stock-picker:latest
+```
 
 ---
 <div align="center">
